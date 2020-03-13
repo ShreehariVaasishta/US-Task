@@ -1,0 +1,73 @@
+{% load static %}
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+
+    <body bgcolor="#616161">
+        <nav class="grey darken-4">
+            <div class="nav-wrapper" >
+                {% if user.is_authenticated %}
+                <a href="{% url 'post_new' %}">Add Post<i class="material-icons left">add</i></a>  
+                <a href="/logout" data-target="mobile-demo" class="sidenav-trigger right">Logout<i class="material-icons right">exit_to_app</i></a>              
+                {% else %}
+                <a href="/login" data-target="mobile-demo" class="sidenav-trigger right">Login<i class="material-icons right">person_pin</i></a>
+                {% endif %}
+                <ul class="right hide-on-med-and-down">
+                    {% if user.is_authenticated %} 
+                    <li><a href="/logout"><i class="material-icons right">exit_to_app</i>Logout</a></li>
+                    <li><i class="material-icons right ">account_circle</i>{{ user.username }}</li> 
+                </ul>      
+                {% else %}
+                <li><a href="/login">Login<i class="material-icons left">person_pin</i></a></li>
+                <!--<li><a href="/register">Register<i class="material-icons left">account_circle</i></a></li>-->
+                {% endif %}
+            </ul>
+        </div> 
+        <ul class="sidenav" id="mobile-demo">
+            {% if user.is_authenticated %} 
+            <li><a href="{% url 'post_new' %}">Add Post<i class="material-icons left">add</i></a></li>
+            <li><a href="/logout"><i class="material-icons right">exit_to_app</i>Logout</a></li>
+            <li><i class="material-icons right ">account_circle</i>{{ user.username }}</li> 
+        </ul>
+        {% else %}
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/login">Login<i class="material-icons left">person_pin</i></a></li>
+            <!--<li><a href="/register">Register<i class="material-icons left">account_circle</i></a></li>-->
+            {% endif %}
+        </ul>
+    </nav>
+    
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'success'%}
+    <script>M.toast({html: "{{message}}", classes: 'green rounded', displayLength:2000});</script>
+    {% elif message.tags == 'info'%}
+    <script>M.toast({html: "{{message}}", classes: 'blue rounded', displayLength:2000});</script>
+    {% elif message.tags == 'warning'%}
+    <script>M.toast({html: "{{message}}", classes: 'orange rounded', displayLength:10000});</script>
+    {% elif message.tags == 'error'%}
+    <script>M.toast({html: "{{message}}", classes: 'red rounded', displayLength:10000});</script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <div class="container">
+        <br>
+        {% load static %}
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>
