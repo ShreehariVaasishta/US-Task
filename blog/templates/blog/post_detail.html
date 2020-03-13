@@ -3,13 +3,12 @@
 {% block content %}
 
 <div class="post">
-    <img src="{{ post.image_url }}">
+<blockquote class="red lighten-5"> <b>Note:</b> Creator/Author of the note can edit only his note.</blockquote>
     {% if post.published_date %}
     <div class="date">
-        <p>Updated on: {{ post.published_date }}</p>
+        <p style="color:black">Updated on: {{ post.published_date }}</p>
     </div>
     {% endif %}
-
     <div class="col-md-8">
         <h2 style="color:#f5f5f5;">{{ post.title }} </h2>
         <div  class="card-panel white lighten-5">
